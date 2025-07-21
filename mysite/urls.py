@@ -15,11 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from front import views as front_views
 from django.contrib import admin
+
 urlpatterns = [
-    path('', front_views.index, name='index'),  # 루트 URL 연결
-    path('front/', include('front.urls')),
+    path('', include('front.urls')),  # front 앱 urls.py를 루트 경로에 연결
     path('location_sender/', include('location_sender.urls')),
     path('admin/', admin.site.urls),
 ]
