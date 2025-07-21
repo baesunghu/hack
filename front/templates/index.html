@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -176,9 +177,12 @@
       });
     });
   </script>
-<p id="result">거리는 다음과 같습니다: -</p>
+<p id="result"></p>
 <p id="carbon_car"></p>
 <p id="carbon_metro"></p>
+<div id="carbon_chart_container" style="margin-top:20px;">
+  <img id="carbon_chart" src="{% static 'images/carbon_bar_chart.png' %}?v={{ timestamp }}" alt="탄소 배출량 그래프" style="max-width: 100%; height: auto; display: none;">
+</div>
 <button id="calculate-distance">계산하기</button>
 <script>
   // 기존 역 리스트, 이벤트 처리 코드는 그대로 유지하세요.
@@ -220,6 +224,9 @@
         document.getElementById('result').textContent = `거리는 다음과 같습니다: ${data.distance} m`;
         document.getElementById('carbon_car').textContent = `자동차로 목적지에 갈 때 탄소 배출량은 ${carbon_car}g 입니다.`;
         document.getElementById('carbon_metro').textContent = `지하철로 목적지에 갈 때 탄소 배출량은 ${carbon_metro_m }에서 ${carbon_metro_M}g 입니다.`;
+        const chartImg = document.getElementById('carbon_chart');
+        chartImg.src = "/static/images/carbon_bar_chart.png";  // 실제 이미지 경로에 맞게 수정
+        chartImg.style.display = 'block';
         function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {

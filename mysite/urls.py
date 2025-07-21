@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+import os
 
 urlpatterns = [
     path('', include('front.urls')),  # front 앱 urls.py를 루트 경로에 연결
     path('location_sender/', include('location_sender.urls')),
     path('admin/', admin.site.urls),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=os.path.join(settings.BASE_DIR, 'front', 'static'))

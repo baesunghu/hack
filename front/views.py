@@ -1,7 +1,10 @@
+from django.utils.timezone import now
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .main import get_distance1
+from .graphmaker import graphmaker
+from django.utils import timezone
 import json
 
 # 아래 get_distance 함수는 본인의 API 키와 로직에 맞게 수정하세요.
@@ -16,6 +19,8 @@ def save_var(request):
         data = json.loads(request.body)
         js_var = data.get('myVar')
         print(f"JavaScript에서 받은 값: {js_var}")
+        v1, v2 = js_var.split(" ")
+        graphmaker(float(v1), float(v2))
         return JsonResponse({'status': 'ok'})
 
 
@@ -26,7 +31,7 @@ def get_distance(loc1, loc2):
 
 
 def index(request):
-    return render(request, 'index.html')  # templates/index.html 호출
+    return render(request, 'index.html', {'timestamp': now().timestamp()})
 
 
 @csrf_exempt  # POST AJAX 요청 시 CSRF 문제 회피 (개발 단계)

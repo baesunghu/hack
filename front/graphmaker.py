@@ -1,26 +1,34 @@
 import matplotlib.pyplot as plt
+import matplotlib
+import os
+import matplotlib.font_manager as fm
+matplotlib.use('Agg')
 
-# ¿¹½Ã µ¥ÀÌÅÍ
-carbon_metro_M = 0.123
-carbon_metro_m = 0.136
 
-# º¯¼ö ÀÌ¸§°ú °ª ¸®½ºÆ®
-labels = ['carbon_metro_M', 'carbon_metro_m']
-values = [carbon_metro_M, carbon_metro_m]
+def graphmaker(v1, v2):
+    font_path = "C:/Windows/Fonts/malgun.ttf"
+    font_name = fm.FontProperties(fname=font_path).get_name()
 
-# ¸·´ë ±×·¡ÇÁ ±×¸®±â
-plt.bar(labels, values, color=['skyblue', 'orange'])
+    plt.rc('font', family=font_name)
+    # ì˜ˆì‹œ ë°ì´í„°
+    carbon_car = v1
+    carbon_metro_avg = v2
 
-# Á¦¸ñ ¹× Ãà ÀÌ¸§ ¼³Á¤
-plt.title('Carbon Emission Comparison')
-plt.ylabel('Value')
+    labels = ['ìë™ì°¨ì˜ íƒ„ì†Œ ë°°ì¶œëŸ‰', 'ì§€í•˜ì² ì˜ íƒ„ì†Œ ë°°ì¶œëŸ‰']
+    values = [carbon_car, carbon_metro_avg]
 
-# °ª Ç¥½ÃÇÏ±â (¸·´ë À§¿¡ ¼ıÀÚ)
-for i, v in enumerate(values):
-    plt.text(i, v + 0.005, f"{v:.3f}", ha='center')
+    plt.bar(labels, values, color=['skyblue', 'orange'])
+    plt.title('íƒ„ì†Œ ë°°ì¶œëŸ‰ ë¶„ì„')
+    plt.ylabel('íƒ„ì†Œ ë°°ì¶œëŸ‰')
 
-# ±×·¡ÇÁ¸¦ ÆÄÀÏ·Î ÀúÀå
-plt.savefig('carbon_bar_chart.png')
+    for i, v in enumerate(values):
+        plt.text(i, v + 0.005, f"{v:.3f}", ha='center')
 
-# ±×·¡ÇÁ º¸¿©ÁÖ±â
-plt.show()
+    # í˜„ì¬ íŒŒì´ì¬ íŒŒì¼ì´ ì‹¤í–‰ëœ ë””ë ‰í† ë¦¬ ìœ„ì¹˜ êµ¬í•˜ê¸°
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # ì €ì¥í•  íŒŒì¼ ê²½ë¡œ ë§Œë“¤ê¸°
+    save_path = os.path.join(current_dir, 'static/images/carbon_bar_chart.png')
+
+    plt.savefig(save_path)
+    plt.close()
